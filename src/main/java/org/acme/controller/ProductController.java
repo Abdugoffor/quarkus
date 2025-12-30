@@ -2,6 +2,7 @@ package org.acme.controller;
 
 import java.util.List;
 
+import org.acme.dto.ProductCreateDTO;
 import org.acme.entity.Product;
 import org.acme.service.ProductService;
 
@@ -45,7 +46,7 @@ public class ProductController {
     }
 
     @POST
-    public Response create(@Valid Product product) {
+    public Response create(@Valid ProductCreateDTO product) {
         return Response.status(Response.Status.CREATED)
                 .entity(productService.create(product))
                 .build();

@@ -2,6 +2,7 @@ package org.acme.service;
 
 import java.util.List;
 
+import org.acme.dto.ProductCreateDTO;
 import org.acme.entity.Category;
 import org.acme.entity.Product;
 import org.acme.repository.CategoryRepository;
@@ -48,16 +49,17 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     @Transactional
-    public Product create(Product product) {
-        // Category mavjudligini tekshirish
-        Long categoryId = product.category != null ? product.category.id : null;
-        if (categoryId == null)
-            throw new NotFoundException("Category id null bo‘lmasligi kerak");
+    public Product create(ProductCreateDTO  dto) {
+        Category category = categoryRepository.findByIdOptional(dto.categoryId)
+            .orElseThrow(() ->
+                new NotFoundException("Category topilmadi. id=" + dto.categoryId)
+            );
 
-        Category category = categoryRepository.findByIdOptional(categoryId)
-                .orElseThrow(() -> new NotFoundException("Category topilmadi. id=" + categoryId));
-
+        Product product = new Product();
+        product.name = dto.name;
+        product.price = dto.price;
         product.category = category;
+
         productRepository.persist(product);
         return product;
     }
