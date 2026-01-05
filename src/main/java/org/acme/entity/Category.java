@@ -31,5 +31,7 @@ public class Category {
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     public List<Product> products;
+    
+    public Long getId() { return id; }
 }
 

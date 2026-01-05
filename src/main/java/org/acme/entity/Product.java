@@ -1,5 +1,8 @@
 package org.acme.entity;
 
+
+
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
@@ -33,4 +36,6 @@ public class Product {
     @JoinColumn(name = "category_id", nullable = false)
     @JsonBackReference
     public Category category;
+
+    public Long getId() { return id; }
 }
